@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keymap Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>QMK Keymap Visual Generator</h1>
+  <div class="controls">
+    <input type="text" id="filename" class="filename-input" placeholder="keymap.c" value="keymap.c">
+    <button id="export-btn" class="export-btn">Export Keymap</button>
+    <button id="export-json-btn">Export JSON</button>
+    <button id="import-btn">Import JSON</button>
+    <input type="file" id="import-file" accept=".json" style="display: none;">
+  </div>
+  <div class="layer-tabs" id="layer-tabs"></div>
+  <div class="keyboard" id="keyboard"></div>
+
+  <div class="key-selector" id="key-selector" style="display: none;">
+    <h3>Select Keycode for Key</h3>
+    <input type="text" id="search-input" class="search-input" placeholder="Search keycodes or press a key...">
+    <div id="keycode-list" class="keycode-list"></div>
+    <input type="text" id="custom-keycode" class="custom-input" placeholder="Or enter custom keycode">
+    <div class="button-group">
+      <button id="save-keycode" class="save-btn">Save</button>
+      <button id="cancel-keycode" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <script src="keycodes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
