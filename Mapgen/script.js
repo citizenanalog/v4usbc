@@ -1,5 +1,29 @@
 // Load layout
 let layout = [];
+let currentLayoutFile = 'layout.json';
+let availableLayouts = {
+  'layout': 'layout.json',
+  'sweep_layout': 'sweep_layout.json'
+};
+
+function loadLayout(layoutFile) {
+  fetch(layoutFile)
+    .then(response => response.json())
+    .then(data => {
+      layout = data.layout;
+      // Resize layers if necessary
+      layers.forEach(layer => {
+        if (layer.length !== layout.length) {
+          while (layer.length < layout.length) layer.push('KC_NO');
+          layer.splice(layout.length);
+        }
+      });
+      renderLayerTabs();
+      renderKeyboard();
+      hideKeySelector();
+    });
+}
+
 fetch('layout.json')
   .then(response => response.json())
   .then(data => {
@@ -164,6 +188,10 @@ function setupEventListeners() {
   document.getElementById('export-json-btn').onclick = exportJSON;
   document.getElementById('import-btn').onclick = () => document.getElementById('import-file').click();
   document.getElementById('import-file').onchange = importKeymap;
+  document.getElementById('layout-selector').onchange = (e) => {
+    currentLayoutFile = availableLayouts[e.target.value];
+    loadLayout(currentLayoutFile);
+  };
   document.getElementById('keycode-list').addEventListener('click', (e) => {
     if (e.target.classList.contains('star')) {
       e.stopPropagation();
@@ -205,8 +233,9 @@ function generateCCode() {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 `;
+  const macro = currentLayoutFile === 'layout.json' ? 'LAYOUT_split_3x5_3_ex2' : 'LAYOUT_split_3x6_3';
   layers.forEach((layer, index) => {
-    code += `    [${index}] = LAYOUT_split_3x5_3_ex2(
+    code += `    [${index}] = ${macro}(
 `;
     // Top: 6+6, Middle: 6+6, Bottom: 5+5, Thumbs: 6
     const leftRows = [

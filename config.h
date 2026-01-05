@@ -17,13 +17,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 #pragma once
+
 #define USE_EX2
 //#define USE_MATRIX_I2C
-#define COMBO_TERM 40   // miliseconds
-//#define QUICK_TAP_TERM 0
-//#define TAPPING_TERM 100
+#define COMBO_TERM 40 // milliseconds
+
+#define MOUSEKEY_WHEEL_DELAY 0
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 0 // Disable acceleration completely
+#define MOUSEKEY_WHEEL_MAX_SPEED 4
+#define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 4
+#define MOUSEKEY_WHEEL_BASE_MOVEMENTS 8
+#define MOUSEKEY_WHEEL_ACCELERATED_MOVEMENTS 12
+#define MOUSEKEY_WHEEL_DECELERATED_MOVEMENTS 2
+
+#ifdef SPLIT_KEYBOARD
+    // Hardcode left as master (plug USB here)
+    #define MASTER_LEFT
+#endif
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
